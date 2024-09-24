@@ -41,12 +41,23 @@ To get started with DermaConnect, follow the instructions below to set up the pr
 1. Navigate to the backend folder:
    ```bash
     cd backend
-2. Install the required dependencies using pipenv:
+2. Inside the backend folder create the app.py and model.py:
+      ```bash
+      touch app.py model.py
+      
+3. Install the required dependencies using pipenv:
    ```bash
     pipenv install
-3. Set up a PostgreSQL database and update your environment variables with the database URL.Start the Flask server:
+4. Navigate into the shell
    ```bash
-    pipenv run flask run
+   pipenv shell
+5. Install flask
+   ```bash
+   pip install flask
+6. Verify installed packages
+   ```bash
+   pip freeze
+
 ## Frontend Setup (React & Chakra UI):
 
 1. Navigate to the frontend folder:
