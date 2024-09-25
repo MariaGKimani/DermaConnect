@@ -13,6 +13,8 @@ class User(db.Model):
     password = db.Column(db.String)
     message = db.Column(db.String(150))
 
+    user_appointments = db.relationship('Appointments', back_populates='users')
+
 
 class Dermatologist(db.Model):
     __tablename__ = 'dermatologists'
@@ -36,6 +38,8 @@ class Dermatologist(db.Model):
     certificate_photo = db.Column(db.String)
     id_photo = db.Column(db.String)
 
+    dermatologist_appointment = db.relationship('Appointment', back_populates='dermatologist')
+
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'
@@ -46,3 +50,6 @@ class Appointment(db.Model):
     preferred_date = db.Column(db.String)
     preferred_time = db.Column(db.DateTime)
     reason_for_visit = db.Column(db.String)
+
+    user = db.relationship('User', back_populates='appointments')
+    dermatologist = db.relationship('Dermatologist', back_populates='appointments')
