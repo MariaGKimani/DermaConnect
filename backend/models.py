@@ -35,3 +35,17 @@ class Dermatologist(db.Model):
     professional_photo = db.Column(db.String)
     certificate_photo = db.Column(db.String)
     id_photo = db.Column(db.String)
+
+
+class Appointment(db.Model):
+    __tablename__ = 'appointments'
+
+    id = db Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    phone_number = db.Column(db.String)
+    preferred_date = db.Column(db.String)
+    preferred_time = db.Column(db.DateTime)
+    reason_for_visit = db.Column(db.String)
+
+
+
