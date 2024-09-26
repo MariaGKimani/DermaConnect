@@ -13,7 +13,10 @@ class User(db.Model):
     password = db.Column(db.String)
     message = db.Column(db.String(150))
 
-    user_appointments = db.relationship('Appointments', back_populates='users')
+    # appointment_id = db.Column(db.Integer, db.ForeignKey('appointments.id'))
+
+
+    user_appointments = db.relationship('Appointment', back_populates='user')
 
 
 class Dermatologist(db.Model):
@@ -38,7 +41,10 @@ class Dermatologist(db.Model):
     certificate_photo = db.Column(db.String)
     id_photo = db.Column(db.String)
 
-    dermatologist_appointment = db.relationship('Appointment', back_populates='dermatologist')
+    # derm_appointment_id = db.Column(db.Integer, db.ForeignKey('appointments.id'))
+
+
+    dermatologist_appointments = db.relationship('Appointment', back_populates='dermatologist')
 
 
 class Appointment(db.Model):
@@ -51,5 +57,8 @@ class Appointment(db.Model):
     preferred_time = db.Column(db.DateTime)
     reason_for_visit = db.Column(db.String)
 
-    user = db.relationship('User', back_populates='appointments')
-    dermatologist = db.relationship('Dermatologist', back_populates='appointments')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    dermatologist_id = db.Column(db.Integer, db.ForeignKey('dermatologists.id'))
+
+    user = db.relationship('User', back_populates='user_appointments')
+    dermatologist = db.relationship('Dermatologist', back_populates='dermatologist_appointments')
