@@ -13,9 +13,6 @@ class User(db.Model):
     password = db.Column(db.String)
     message = db.Column(db.String(150))
 
-    # appointment_id = db.Column(db.Integer, db.ForeignKey('appointments.id'))
-
-
     user_appointments = db.relationship('Appointment', back_populates='user')
 
 
@@ -40,9 +37,6 @@ class Dermatologist(db.Model):
     professional_photo = db.Column(db.String)
     certificate_photo = db.Column(db.String)
     id_photo = db.Column(db.String)
-
-    # derm_appointment_id = db.Column(db.Integer, db.ForeignKey('appointments.id'))
-
 
     dermatologist_appointments = db.relationship('Appointment', back_populates='dermatologist')
 
