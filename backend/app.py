@@ -92,8 +92,29 @@ class AppointmentResource(Resource):
         else:
             return make_response(jsonify({'message': 'Appointments not found'}), 404)
 
-    def post(self):
+     def post(self):
         data = request.get_json()
+
+        # Validate required fields
+        required_fields = [
+            'name',
+            'phone_number',
+            'preferred_date',
+            'preferred_time',
+            'reason_for_visit',
+            'user_id',
+            'dermatologist_id'
+        ]
+        missing_fields = [field for field in required_fields if field not in data]
+
+        if missing_fields:
+            return make_response(
+                jsonify({'error': f'Missing required fields: {", ".join(missing_fields)}'}),
+                400
+            )
+
+        # Optional: Validate phone number and date formats here
+
         new_appointment = Appointment(
             name=data.get('name'),
             phone_number=data.get('phone_number'),
@@ -103,10 +124,23 @@ class AppointmentResource(Resource):
             user_id=data.get('user_id'),
             dermatologist_id=data.get('dermatologist_id')
         )
-        db.session.add(new_appointment)
-        db.session.commit()
-        return make_response(jsonify({'message': 'Appointment created successfully'}), 201)
 
+        try:
+            db.session.add(new_appointment)
+            db.session.commit()
+            return make_response(jsonify({'message': 'Appointment created successfully'}), 201)
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            return make_response(
+                jsonify({'error': 'Failed to create appointment', 'details': str(e)}),
+                500
+            )
+        except Exception as e:
+            db.session.rollback()
+            return make_response(
+                jsonify({'error': 'An unexpected error occurred', 'details': str(e)}),
+                500
+            )
     def put(self, id):
         appointment = Appointment.query.filter_by(id=id).first()
         if appointment:
