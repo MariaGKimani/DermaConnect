@@ -1,4 +1,4 @@
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, request
 from flask_migrate import Migrate
 from models import db, User, Dermatologist, Appointment
 from flask_restful import Api, Resource
@@ -6,7 +6,7 @@ from flask_restful import Api, Resource
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config['SQLALCHEMY-TRACK-MODIFICATION'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
@@ -73,6 +73,102 @@ class DermatologistResource(Resource):
             return make_response(jsonify({'message': 'Users not found'}), 404)
 
         api.add_resource(DermatologistResource, '/dermatologists')
+
+
+class AppointmentResource(Resource):
+    def get(self):
+        appointments = Appointment.query.all()
+        if appointments:
+            return make_response(jsonify([{
+                'id': appointment.id,
+                'name': appointment.name,
+                'phone_number': appointment.phone_number,
+                'preferred_date': appointment.preferred_date,
+                'preferred_time': appointment.preferred_time,
+                'reason_for_visit': appointment.reason_for_visit,
+                'user_id': appointment.user_id,
+                'dermatologist_id': appointment.dermatologist_id
+            } for appointment in appointments]), 200)
+        else:
+            return make_response(jsonify({'message': 'Appointments not found'}), 404)
+
+     def post(self):
+        data = request.get_json()
+
+        # Validate required fields
+        required_fields = [
+            'name',
+            'phone_number',
+            'preferred_date',
+            'preferred_time',
+            'reason_for_visit',
+            'user_id',
+            'dermatologist_id'
+        ]
+        missing_fields = [field for field in required_fields if field not in data]
+
+        if missing_fields:
+            return make_response(
+                jsonify({'error': f'Missing required fields: {", ".join(missing_fields)}'}),
+                400
+            )
+
+        # Optional: Validate phone number and date formats here
+
+        new_appointment = Appointment(
+            name=data.get('name'),
+            phone_number=data.get('phone_number'),
+            preferred_date=data.get('preferred_date'),
+            preferred_time=data.get('preferred_time'),
+            reason_for_visit=data.get('reason_for_visit'),
+            user_id=data.get('user_id'),
+            dermatologist_id=data.get('dermatologist_id')
+        )
+
+        try:
+            db.session.add(new_appointment)
+            db.session.commit()
+            return make_response(jsonify({'message': 'Appointment created successfully'}), 201)
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            return make_response(
+                jsonify({'error': 'Failed to create appointment', 'details': str(e)}),
+                500
+            )
+        except Exception as e:
+            db.session.rollback()
+            return make_response(
+                jsonify({'error': 'An unexpected error occurred', 'details': str(e)}),
+                500
+            )
+    def put(self, id):
+        appointment = Appointment.query.filter_by(id=id).first()
+        if appointment:
+            data = request.get_json()
+            appointment.name = data.get('name', appointment.name)
+            appointment.phone_number = data.get('phone_number', appointment.phone_number)
+            appointment.preferred_date = data.get('preferred_date', appointment.preferred_date)
+            appointment.preferred_time = data.get('preferred_time', appointment.preferred_time)
+            appointment.reason_for_visit = data.get('reason_for_visit', appointment.reason_for_visit)
+            appointment.user_id = data.get('user_id', appointment.user_id)
+            appointment.dermatologist_id = data.get('dermatologist_id', appointment.dermatologist_id)
+
+            db.session.commit()
+            return make_response(jsonify({'message': 'Appointment updated successfully'}), 200)
+        else:
+            return make_response(jsonify({'message': 'Appointment not found'}), 404)
+
+    def delete(self, id):
+        appointment = Appointment.query.filter_by(id=id).first()
+        if appointment:
+            db.session.delete(appointment)
+            db.session.commit()
+            return make_response(jsonify({'message': 'Appointment deleted successfully'}), 200)
+        else:
+            return make_response(jsonify({'message': 'Appointment not found'}), 404)
+
+
+api.add_resource(AppointmentResource, '/appointments', '/appointments/<int:id>')
 
 
 if __name__ == '__main__':
