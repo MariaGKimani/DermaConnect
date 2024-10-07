@@ -3,6 +3,7 @@ from flask_migrate import Migrate
 from models import db, User, Dermatologist, Appointment
 from flask_restful import Api, Resource
 from flask_bcrypt import Bcrypt
+from datetime import datetime,time
 # cloudinary
 import cloudinary
 import cloudinary.uploader
@@ -25,8 +26,7 @@ bcrypt = Bcrypt(app)
 # Cloudinary Configuration       
 cloudinary.config( 
     # get variables from .env
-
-    cloud_name = os.getenv('CLOUD_NAME'), 
+    cloud_name = os.getenv('CLOUDINARY_NAME'), 
     api_key = os.getenv('API_KEY'), 
     api_secret = os.getenv('API_SECRET'),
     secure=True
@@ -111,13 +111,13 @@ class DermatologistResource(Resource):
             id_photo = request.files.get('id_photo')
 
             # check if dermatologist exists
-            dermatologist_exists = Dermatology.query.filter_by(email=email).first()
-            if dermatologists_exists:
+            dermatologist_exists = Dermatologist.query.filter_by(email=email).first()
+            if dermatologist_exists:
                 return make_response(jsonify({'message':'Dermatologist already exists'}), 409)
 
             # hash password
-            hashed_password = bcrypt.generate_password_hash(password)
-            hashed_confirm_password = bcrypt.generate_password_hash(confirm_password)
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+            hashed_confirm_password = bcrypt.generate_password_hash(confirm_password).decode('utf-8')
 
             # upload images to cloudinary and get url
             upload_professional_photo = cloudinary.uploader.upload(professional_photo)
@@ -152,7 +152,6 @@ class DermatologistResource(Resource):
             db.session.commit()
 
             return make_response(jsonify({
-                'message': 'Dermatologist created successfully',
                 'first_name' : first_name,
                 'last_name' : last_name,
                 'email' : email,
@@ -166,9 +165,9 @@ class DermatologistResource(Resource):
                 'consultation_fees' : consultation_fees,
                 'cost_per_session' : cost_per_session,
                 'payment_method' : payment_method,
-                'professional_photo' : professional_photo,
-                'certificate_photo' : certificate_photo,
-                'id_photo' : id_photo,
+                'professional_photo' : professional_photo_url,
+                'certificate_photo' : certificate_photo_url,
+                'id_photo' : id_photo_url,
                 }), 201)
 
         except Exception as err:
@@ -201,8 +200,8 @@ class AppointmentResource(Resource):
                 'id': appointment.id,
                 'name': appointment.name,
                 'phone_number': appointment.phone_number,
-                'preferred_date': appointment.preferred_date,
-                'preferred_time': appointment.preferred_time,
+                'preferred_date': appointment.preferred_date.strftime('%d/%m/%Y'),
+                'preferred_time': appointment.preferred_time.strftime('%H:%M'),
                 'reason_for_visit': appointment.reason_for_visit,
                 'user_id': appointment.user_id,
                 'dermatologist_id': appointment.dermatologist_id
@@ -210,7 +209,7 @@ class AppointmentResource(Resource):
         else:
             return make_response(jsonify({'message': 'Appointments not found'}), 404)
 
-     def post(self):
+    def post(self):
         data = request.get_json()
 
         # Validate required fields
@@ -232,12 +231,18 @@ class AppointmentResource(Resource):
             )
 
         # Optional: Validate phone number and date formats here
+        preferred_datetime_str=data.get('preferred_date')
+        preferred_time_str=data.get('preferred_time')
+
+        #change format
+        preferred_date = datetime.strptime(preferred_datetime_str,'%d/%m/%Y').date()
+        preferred_time = datetime.strptime(preferred_time_str,'%H:%M').time()
 
         new_appointment = Appointment(
             name=data.get('name'),
             phone_number=data.get('phone_number'),
-            preferred_date=data.get('preferred_date'),
-            preferred_time=data.get('preferred_time'),
+            preferred_date=preferred_date,
+            preferred_time=preferred_time,
             reason_for_visit=data.get('reason_for_visit'),
             user_id=data.get('user_id'),
             dermatologist_id=data.get('dermatologist_id')
@@ -247,12 +252,7 @@ class AppointmentResource(Resource):
             db.session.add(new_appointment)
             db.session.commit()
             return make_response(jsonify({'message': 'Appointment created successfully'}), 201)
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            return make_response(
-                jsonify({'error': 'Failed to create appointment', 'details': str(e)}),
-                500
-            )
+
         except Exception as e:
             db.session.rollback()
             return make_response(
@@ -265,8 +265,17 @@ class AppointmentResource(Resource):
             data = request.get_json()
             appointment.name = data.get('name', appointment.name)
             appointment.phone_number = data.get('phone_number', appointment.phone_number)
-            appointment.preferred_date = data.get('preferred_date', appointment.preferred_date)
-            appointment.preferred_time = data.get('preferred_time', appointment.preferred_time)
+
+            #convert date format
+            preferred_date_str = data.get('preferred_date')
+            preferred_date = datetime.strptime(preferred_date_str, '%d/%m/%Y').date()
+            appointment.preferred_date = preferred_date
+
+            # convert time format
+            preferred_time_str = data.get('preferred_time')
+            preferred_time = datetime.strptime(preferred_time_str, '%H:%M').time()
+            appointment.preferred_time = preferred_time
+
             appointment.reason_for_visit = data.get('reason_for_visit', appointment.reason_for_visit)
             appointment.user_id = data.get('user_id', appointment.user_id)
             appointment.dermatologist_id = data.get('dermatologist_id', appointment.dermatologist_id)
