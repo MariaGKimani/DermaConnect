@@ -1,16 +1,16 @@
+import os
 from flask import Flask, make_response, jsonify, request
 from flask_migrate import Migrate
 from models import db, User, Dermatologist, Appointment
 from flask_restful import Api, Resource
 from flask_bcrypt import Bcrypt
-from datetime import datetime,time
+from datetime import datetime, time
 # cloudinary
 import cloudinary
 import cloudinary.uploader
 # load .env file
 from dotenv import load_dotenv
 load_dotenv()
-import os
 
 app = Flask(__name__)
 
@@ -23,12 +23,12 @@ migrate = Migrate(app, db)
 api = Api(app)
 bcrypt = Bcrypt(app)
 
-# Cloudinary Configuration       
-cloudinary.config( 
+# Cloudinary Configuration
+cloudinary.config(
     # get variables from .env
-    cloud_name = os.getenv('CLOUDINARY_NAME'), 
-    api_key = os.getenv('API_KEY'), 
-    api_secret = os.getenv('API_SECRET'),
+    cloud_name=os.getenv('CLOUDINARY_NAME'),
+    api_key=os.getenv('API_KEY'),
+    api_secret=os.getenv('API_SECRET'),
     secure=True
 )
 
@@ -43,6 +43,42 @@ class UserResource(Resource):
             return make_response(jsonify([{'id': user.id, 'name': user.name, 'email': user.email, 'phone_number': user.phone_number, 'password': user.password, 'message': user.message} for user in users]), 200)
         else:
             return make_response(jsonify({'message': 'Users not found'}), 404)
+
+    def post(self):
+        try:
+            name = request.form.get('name')
+            email = request.form.get('email')
+            phone_number = request.form.get('phone_number')
+            password = request.form.get('password')
+            message = request.form.get('message')
+
+            user_exists = User.query.filter_by(email=email).first()
+            if user_exists:
+                return make_response(jsonify({'message': 'User exists'}), 409)
+
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+            new_user = User(
+                name=name,
+                email=email,
+                phone_number=phone_number,
+                password=hashed_password,
+                message=message
+            )
+            db.session.add(new_user)
+            db.session.commit()
+
+            return make_response(jsonify({
+                'name': name,
+                'email': email,
+                'phone_number': phone_number,
+                'password': hashed_password,
+                'message': message
+            }), 201)
+
+        except Exception as err:
+            print(err)
+            return make_response(jsonify({'message': 'Error registering user'}), 400)
 
     def delete(self, id):
         user = User.query.filter_by(id=id).first()
@@ -113,7 +149,7 @@ class DermatologistResource(Resource):
             # check if dermatologist exists
             dermatologist_exists = Dermatologist.query.filter_by(email=email).first()
             if dermatologist_exists:
-                return make_response(jsonify({'message':'Dermatologist already exists'}), 409)
+                return make_response(jsonify({'message': 'Dermatologist already exists'}), 201)
 
             # hash password
             hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -131,51 +167,50 @@ class DermatologistResource(Resource):
 
             # registered user
             new_Dermatologist = Dermatologist(
-                first_name = first_name,
-                last_name = last_name,
-                email = email,
-                phone_number = phone_number,
-                password = hashed_password,
-                confirm_password = hashed_confirm_password,
-                country = country,
-                city = city,
-                medical_license_number = medical_license_number,
-                level_of_education = level_of_education,
-                consultation_fees = consultation_fees,
-                cost_per_session = cost_per_session,
-                payment_method = payment_method,
-                professional_photo = professional_photo_url,
-                certificate_photo = certificate_photo_url,
-                id_photo = id_photo_url
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                phone_number=phone_number,
+                password=hashed_password,
+                confirm_password=hashed_confirm_password,
+                country=country,
+                city=city,
+                medical_license_number=medical_license_number,
+                level_of_education=level_of_education,
+                consultation_fees=consultation_fees,
+                cost_per_session=cost_per_session,
+                payment_method=payment_method,
+                professional_photo=professional_photo_url,
+                certificate_photo=certificate_photo_url,
+                id_photo=id_photo_url
             )
             db.session.add(new_Dermatologist)
             db.session.commit()
 
             return make_response(jsonify({
-                'first_name' : first_name,
-                'last_name' : last_name,
-                'email' : email,
-                'phone_number' : phone_number,
-                'password' : hashed_password,
-                'confirm_password' : hashed_confirm_password,
-                'country' : country,
-                'city' : city,
-                'medical_license_number' : medical_license_number,
-                'level_of_education' : level_of_education,
-                'consultation_fees' : consultation_fees,
-                'cost_per_session' : cost_per_session,
-                'payment_method' : payment_method,
-                'professional_photo' : professional_photo_url,
-                'certificate_photo' : certificate_photo_url,
-                'id_photo' : id_photo_url,
-                }), 201)
+                'first_name': first_name,
+                'last_name': last_name,
+                'email': email,
+                'phone_number': phone_number,
+                'password': hashed_password,
+                'confirm_password': hashed_confirm_password,
+                'country': country,
+                'city': city,
+                'medical_license_number': medical_license_number,
+                'level_of_education': level_of_education,
+                'consultation_fees': consultation_fees,
+                'cost_per_session': cost_per_session,
+                'payment_method': payment_method,
+                'professional_photo': professional_photo_url,
+                'certificate_photo': certificate_photo_url,
+                'id_photo': id_photo_url,
+            }), 201)
 
         except Exception as err:
             print(err)
-            return make_response(jsonify({'message':'Error registering dermatologist'}), 400)
+            return make_response(jsonify({'message': 'Error registering dermatologist'}), 400)
 
-
-    def delete(self,id):
+    def delete(self, id):
         dermatologist = Dermatologist.query.filter_by(id=id).first()
 
         if dermatologist:
@@ -188,8 +223,7 @@ class DermatologistResource(Resource):
             return make_response(jsonify({'message': 'Dermatologist not found'}), 404)
 
 
-api.add_resource(DermatologistResource, '/dermatologists','/dermatologists/<int:id>')
-
+api.add_resource(DermatologistResource, '/dermatologists', '/dermatologists/<int:id>')
 
 
 class AppointmentResource(Resource):
@@ -231,12 +265,12 @@ class AppointmentResource(Resource):
             )
 
         # Optional: Validate phone number and date formats here
-        preferred_datetime_str=data.get('preferred_date')
-        preferred_time_str=data.get('preferred_time')
+        preferred_datetime_str = data.get('preferred_date')
+        preferred_time_str = data.get('preferred_time')
 
-        #change format
-        preferred_date = datetime.strptime(preferred_datetime_str,'%d/%m/%Y').date()
-        preferred_time = datetime.strptime(preferred_time_str,'%H:%M').time()
+        # change format
+        preferred_date = datetime.strptime(preferred_datetime_str, '%d/%m/%Y').date()
+        preferred_time = datetime.strptime(preferred_time_str, '%H:%M').time()
 
         new_appointment = Appointment(
             name=data.get('name'),
@@ -259,6 +293,7 @@ class AppointmentResource(Resource):
                 jsonify({'error': 'An unexpected error occurred', 'details': str(e)}),
                 500
             )
+
     def put(self, id):
         appointment = Appointment.query.filter_by(id=id).first()
         if appointment:
@@ -266,7 +301,7 @@ class AppointmentResource(Resource):
             appointment.name = data.get('name', appointment.name)
             appointment.phone_number = data.get('phone_number', appointment.phone_number)
 
-            #convert date format
+            # convert date format
             preferred_date_str = data.get('preferred_date')
             preferred_date = datetime.strptime(preferred_date_str, '%d/%m/%Y').date()
             appointment.preferred_date = preferred_date
