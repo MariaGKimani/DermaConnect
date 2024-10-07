@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -47,8 +48,8 @@ class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     phone_number = db.Column(db.String)
-    preferred_date = db.Column(db.String)
-    preferred_time = db.Column(db.DateTime)
+    preferred_date = db.Column(db.Date)
+    preferred_time = db.Column(db.Time)
     reason_for_visit = db.Column(db.String)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
