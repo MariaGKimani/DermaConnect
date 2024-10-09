@@ -5,6 +5,7 @@ from models import db, User, Dermatologist, Appointment
 from flask_restful import Api, Resource
 from flask_bcrypt import Bcrypt
 from datetime import datetime, time
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token
 # cloudinary
 import cloudinary
 import cloudinary.uploader
@@ -16,12 +17,14 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
 
 db.init_app(app)
 
 migrate = Migrate(app, db)
 api = Api(app)
 bcrypt = Bcrypt(app)
+jwt = JWTManager(app)
 
 # Cloudinary Configuration
 cloudinary.config(
@@ -94,6 +97,31 @@ class UserResource(Resource):
 
 
 api.add_resource(UserResource, '/users', '/users/<int:id>')
+
+# USER LOGIN
+class UserLoginResource(Resource):
+    def post(self):
+        data = request.get_json()
+
+        email = data.get('email')
+        password = data.get('password')
+
+        user = User.query.filter_by(email=email).first()
+
+        if user and bcrypt.check_password_hash(user.password, password):
+            access_token = create_access_token(identity = {'email':user.email, 'name':user.name})
+            refresh_token = create_refresh_token(identity = {'email':user.email, 'name':user.name})
+
+            return make_response(jsonify({
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+                'username': user.name
+            }), 200)
+
+        else: 
+            return make_response(jsonify({'error': 'Invalid username or password'}), 401)
+
+api.add_resource(UserLoginResource, '/login')
 
 
 # DERMATOLOGIST API
