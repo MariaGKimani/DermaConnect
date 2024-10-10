@@ -35,8 +35,8 @@ cloudinary.config(
     secure=True
 )
 
-
 # USER API
+
 
 class UserResource(Resource):
     def get(self):
@@ -99,6 +99,8 @@ class UserResource(Resource):
 api.add_resource(UserResource, '/users', '/users/<int:id>')
 
 # USER LOGIN
+
+
 class UserLoginResource(Resource):
     def post(self):
         data = request.get_json()
@@ -109,8 +111,8 @@ class UserLoginResource(Resource):
         user = User.query.filter_by(email=email).first()
 
         if user and bcrypt.check_password_hash(user.password, password):
-            access_token = create_access_token(identity = {'email':user.email, 'name':user.name})
-            refresh_token = create_refresh_token(identity = {'email':user.email, 'name':user.name})
+            access_token = create_access_token(identity={'email': user.email, 'name': user.name})
+            refresh_token = create_refresh_token(identity={'email': user.email, 'name': user.name})
 
             return make_response(jsonify({
                 'access_token': access_token,
@@ -118,13 +120,14 @@ class UserLoginResource(Resource):
                 'username': user.name
             }), 200)
 
-        else: 
+        else:
             return make_response(jsonify({'error': 'Invalid username or password'}), 401)
+
 
 api.add_resource(UserLoginResource, '/login')
 
-
 # DERMATOLOGIST API
+
 
 class DermatologistResource(Resource):
     def get(self):
@@ -252,6 +255,33 @@ class DermatologistResource(Resource):
 
 
 api.add_resource(DermatologistResource, '/dermatologists', '/dermatologists/<int:id>')
+
+# DERMATOLOGIST LOGIN
+
+
+class DermatologistLoginResource(Resource):
+    def post(self):
+        data = request.get_json()
+
+        email = data.get('email')
+        password = data.get('password')
+
+        dermatologist = Dermatologist.query.filter_by(email=email).first()
+
+        if dermatologist and bcrypt.check_password_hash(dermatologist.password, password):
+            access_token = create_access_token(identity={'email': dermatologist.email, 'name': dermatologist.name})
+            refresh_token = create_refresh_token(identity={'email': dermatologist.email, 'name': dermatologist.email})
+
+            return make_response(jsonify({
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+                'username': dermatologist.name
+            }), 200)
+        else:
+            return make_response(jsonify({'error': 'Invalid username or password'}), 401)
+
+
+api.add_resource(DermatologistLoginResource, '/login')
 
 
 class AppointmentResource(Resource):
