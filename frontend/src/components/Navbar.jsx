@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Spacer,Image, Flex, Button, IconButton, Icon } from '@chakra-ui/react';
 import logo from "../assets/Pink_Minimal_Skincare___Hair_Free_Logo__1_-removebg-preview.png"
-import { FaPhone } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
