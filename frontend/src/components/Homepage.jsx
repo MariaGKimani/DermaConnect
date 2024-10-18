@@ -1,4 +1,6 @@
 import React from 'react';
+import Navbar from './Navbar';
+import Footer from './Footer';
 import { Box, Heading, Text, Button, Flex, Stack, Image, Divider, Spacer, Avatar } from '@chakra-ui/react';
 import skinImage from '../assets/HOMEPAGE1.jpg'
 import skinButton from '../assets/HOMEPAGE 2.webp'
@@ -14,7 +16,9 @@ import { faCalendarCheck, faHandshake, faLightbulb } from '@fortawesome/free-sol
 const Homepage = () => {
     return (
         <>
-            {/* First box */}
+            <Box>
+                <Navbar />
+                {/* First box */}
             <Box bg="#f5f5f5" height="80vh" display="flex" alignItems="center" justifyContent="flex-end" position="relative" backgroundImage={`url(${skinImage})`} backgroundSize="cover" backgroundPosition='center' backgroundRepeat='no-repeat' pt='80px' >
                 <Flex flexDirection="row" alignItems="center" justifyContent='center' p='2rem' >
                     <Box textAlign="centre" p="2rem">
@@ -133,9 +137,8 @@ const Homepage = () => {
 
                 </Flex>  
             </Box>
-
-
-            
+                <Footer/>  
+            </Box>
         </>
     );
 };
