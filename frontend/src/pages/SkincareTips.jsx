@@ -59,7 +59,7 @@ const SkincareTips = () => {
     return (
         <>
         <Box>
-            {/* <Navbar /> */}
+            <Navbar />
             <Box bgImage='https://images.ctfassets.net/7bobsix9kke6/fNXkOvVP3m1Y5PKmvnxt3/e7c9f70748d268a589188b32287667bf/pexels-th-fingerstudios-6096399.jpg?w=1600&h=650&fl=progressive&q=75&fm=jpg&fit=thumb' height='65vh' filter='contrast(55%)' bgSize='cover'>
                 <Box color='white' textAlign='center' p='13rem'>
                     <Heading size='4xl'>Unlock Expert Skin Care Insights</Heading>

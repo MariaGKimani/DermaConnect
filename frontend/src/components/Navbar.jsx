@@ -8,7 +8,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 const Navbar = () => {
     return(
         <>
-            <Box display="flex" justifyContent="space-between" alignItems="center" p="1rem" boxShadow="md" position="fixed" zIndex="1000">
+            <Box display="flex" justifyContent="space-between" alignItems="center" p="1rem" boxShadow="md" position="fixed"  top="0" left="0" right="0" zIndex='1000' height='90px' bg={'white'}>
                 <Image src={logo} alt="DermaConnect logo" height='150px' ml='5rem'/>
                 <Spacer />
                 <Flex alignItems="center" mr='8rem' >
