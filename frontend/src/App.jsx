@@ -3,6 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom'
 import SkincareTips from './pages/SkincareTips'
 import Homepage from './components/Homepage'
+import DermatologistProfile from './pages/DermatologistProfile'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Routes>
             <Route path='/skincareTips' element={<SkincareTips />}/>
             <Route path='/' element={<Homepage />}/>
+            <Route path='/dermatologistProfile' element={<DermatologistProfile />} />
           </Routes>
         </Router>  
       </ChakraProvider>
