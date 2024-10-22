@@ -19,14 +19,14 @@ const Homepage = () => {
             <Box>
                 <Navbar />
                 {/* First box */}
-            <Box bg="#f5f5f5"  display="flex" alignItems="center" justifyContent="flex-end" position="relative" backgroundImage={`url(${skinImage})`} backgroundSize="cover" backgroundPosition='center' backgroundRepeat='no-repeat' pt='210px' >
-                <Flex flexDirection="row" alignItems="center" justifyContent='center' p='2rem' >
+            <Box height="80vh" display="flex" alignItems="center" justifyContent="flex-end" position="relative" backgroundImage={`url(${skinImage})`} backgroundSize="cover" backgroundPosition='center' backgroundRepeat='no-repeat' pt='210px' >
+                <Flex flexDirection="row" alignItems="center" justifyContent='center'  ml='15%' >
                     <Box textAlign="centre" p="2rem">
-                        <Heading as="h1" size="lg" color="#0A345C">Your skin,Your Confidence.</Heading>
-                        <Text fontSize="lg" color="gray.600" mt="1rem">
+                        <Heading as="h2" size="4xl" color="#0A345C" >Your skin,<br/>Your Confidence.</Heading>
+                        <Text fontSize="3xl" color="gray.600" mt="1rem">
                              Book Dermatologists with Ease                        
                         </Text>
-                        <Text mt="1rem" fontSize="md" color="gray.500">
+                        <Text mt="1rem" fontSize="2xl" color="gray.500">
                             Let us help you glow
                         </Text>
                         <Button mt="2rem" colorScheme="teal" size="lg" alignItems='center' bg="#0A345C" _hover={{ bg: "#072d49" }}>
