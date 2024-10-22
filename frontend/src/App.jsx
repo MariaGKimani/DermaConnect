@@ -4,6 +4,7 @@ import { BrowserRouter as Router,Routes,Route } from 'react-router-dom'
 import SkincareTips from './pages/SkincareTips'
 import Homepage from './components/Homepage'
 import DermatologistProfile from './pages/DermatologistProfile'
+import SignUp from './pages/SignUp'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path='/skincareTips' element={<SkincareTips />}/>
             <Route path='/' element={<Homepage />}/>
             <Route path='/dermatologistProfile' element={<DermatologistProfile />} />
+            <Route path='/signUp' element={<SignUp />} />
           </Routes>
         </Router>  
       </ChakraProvider>
