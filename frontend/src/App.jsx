@@ -5,6 +5,7 @@ import SkincareTips from './pages/SkincareTips'
 import Homepage from './components/Homepage'
 import DermatologistProfile from './pages/DermatologistProfile'
 import SignUp from './pages/SignUp'
+import SignIn from './pages/SignIn'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path='/' element={<Homepage />}/>
             <Route path='/dermatologistProfile' element={<DermatologistProfile />} />
             <Route path='/signUp' element={<SignUp />} />
+            <Route path='/signIn' element={<SignIn />} />
           </Routes>
         </Router>  
       </ChakraProvider>
