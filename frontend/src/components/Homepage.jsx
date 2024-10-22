@@ -19,7 +19,7 @@ const Homepage = () => {
             <Box>
                 <Navbar />
                 {/* First box */}
-            <Box bg="#f5f5f5" height="80vh" display="flex" alignItems="center" justifyContent="flex-end" position="relative" backgroundImage={`url(${skinImage})`} backgroundSize="cover" backgroundPosition='center' backgroundRepeat='no-repeat' pt='80px' >
+            <Box bg="#f5f5f5"  display="flex" alignItems="center" justifyContent="flex-end" position="relative" backgroundImage={`url(${skinImage})`} backgroundSize="cover" backgroundPosition='center' backgroundRepeat='no-repeat' pt='210px' >
                 <Flex flexDirection="row" alignItems="center" justifyContent='center' p='2rem' >
                     <Box textAlign="centre" p="2rem">
                         <Heading as="h1" size="lg" color="#0A345C">Your skin,Your Confidence.</Heading>

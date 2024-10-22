@@ -1,7 +1,8 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { Grid, GridItem, Box, Image, Text, Button, Flex } from "@chakra-ui/react";
+import { Grid, Image, Box, Text, Button, Card, CardBody, Stack, Heading, CardFooter, ButtonGroup } from "@chakra-ui/react";
+
 
 
 const dermatologists = [
@@ -92,80 +93,98 @@ const dermatologists = [
   ];
   
 
-  const Dermatologist = () => {
-  return (
-    <>
-      <Box>
-        <Navbar />
-        {/* Heading */}
-        <Box mt="100px" textAlign="center">
-          <Text fontSize="3xl" fontWeight="bold" color="#274760">Our Trusted Dermatologists</Text>
-          <Text fontSize="lg" mt={2} color="gray.600">Browse through our certified dermatology professionals ready to assist with your skincare needs.</Text>
-        </Box>
-
-        {/* Dermatologist Cards */}
-        <Box mt="50px" p={4}>
-          <Flex justifyContent="center">
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} gap={8}>
-              {dermatologists.map(dermatologist => (
-                <GridItem key={dermatologist.id}>
-                  <Box 
-                    width="100%" 
-                    maxW="350px" 
-                    height="auto" 
-                    background="rgba(209, 238, 244, 0.5)" 
-                    borderRadius="lg" 
-                    boxShadow="md"
-                    transition="transform 0.3s"
-                    _hover={{ transform: "scale(1.05)" }}
-                    textAlign="center" 
-                    p={6}
-                    position="relative"
-                  >
-                    <Image 
-                      src={dermatologist.image} 
-                      alt={dermatologist.name} 
-                      borderRadius="full" 
-                      boxSize="200px" 
-                      objectFit="contain" 
-                      mx="auto" 
-                    />
-
-                    <Box backgroundColor="white" mt={4} p={4} borderRadius="md">
-                      <Text fontWeight="bold" color="#274760" fontSize="xl">{dermatologist.name}</Text>
-                      <Text color="gray.600" mt={2}>{dermatologist.title}</Text>
-                      <Text mt={4} color="#274760" fontSize="sm">{dermatologist.description}</Text>
-                    </Box>
-
-                    <Box mt={4}>
-                      <Button 
-                        width="100%" 
-                        backgroundColor="#0A345C" 
-                        color="white" 
-                        _hover={{ backgroundColor: "#082B4A" }} 
-                        mb={2}
-                      >
-                        View Profile
-                      </Button>
-                      <Button 
-                        width="100%" 
-                        backgroundColor="#0A345C" 
-                        color="white" 
-                        _hover={{ backgroundColor: "#082B4A" }}
-                      >
-                        Book Appointment
-                      </Button>
-                    </Box>
-                  </Box>
-                </GridItem>
-              ))}
-            </Grid>
-          </Flex>
-        </Box>
-        <Footer />
-      </Box>
-    </>
+  const DermatologistCard = ({ name, title, description, image }) => (
+    <Card border='none' maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow='lg'>
+      
+      <CardBody
+        bg="rgba(209, 238, 244, 0.5)" 
+        borderRadius="lg"
+        p={4}
+        width={'100%'}
+      >
+        <Image
+          src={image}
+          alt={name}
+          borderRadius="lg"
+          boxSize="150px"
+          objectFit="contain"
+          mx="auto"
+          p={2}
+        />
+      </CardBody>
+  
+      <CardBody bg="white" borderRadius="lg" p={4}> 
+        <Stack mt="6" spacing="3">
+          <Heading size="md" color="rgba(39, 71, 96, 0.92)">
+            {name}
+          </Heading>
+          <Text fontWeight="bold" color="rgba(39, 71, 96, 0.92)">
+            {title}
+          </Text>
+          <Text color="rgba(39, 71, 96, 0.52)">{description}</Text>
+        </Stack>
+      </CardBody>
+      
+      <CardFooter 
+        bg="rgba(209, 238, 244, 0.5)" 
+        borderRadius="lg"
+        display="flex"
+        justifyContent="center">
+         
+          <ButtonGroup spacing={10} justifyContent="center" width={'100%'}>
+            <Button
+            variant="solid"
+            bg="#0A345C"
+            color="white"
+            _hover={{
+              bg: 'transparent',
+              color: '#0A345C',
+              border: '2px solid #0A345C',
+            }}
+          >
+            View Profile
+          </Button>
+          <Button
+            variant="solid"
+            bg="#0A345C"
+            color="white"
+            _hover={{
+              bg: 'transparent',
+              color: '#0A345C',
+              border: '2px solid #0A345C',
+            }}
+          >
+            Book Appointment
+          </Button>
+        </ButtonGroup>
+      </CardFooter>
+    </Card>
   );
-};
-
-export default Dermatologist;
+  
+  const DermatologistsPage = () => (
+    <Box backgroundColor="white" minH="100vh" py="8"  pt="100px">
+       <Navbar />
+      <Box textAlign="center" mb="8">
+        <Heading as="h1" size="xl">
+          Our Trusted Dermatologists
+        </Heading>
+        <Text fontSize="lg" mt="2">
+          Browse through our certified dermatology professionals ready to assist with your skincare needs.
+        </Text>
+      </Box>
+  
+      <Grid
+        templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }}
+        gap={6}
+        px={{ base: 4, md: 8 }}
+        mb="8" 
+      >
+        {dermatologists.map((dermatologist) => (
+          <DermatologistCard key={dermatologist.id} {...dermatologist} />
+        ))}
+      </Grid>
+      <Footer /> 
+    </Box>
+  );
+  
+  export default DermatologistsPage;

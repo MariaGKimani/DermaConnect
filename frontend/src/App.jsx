@@ -4,9 +4,9 @@ import { BrowserRouter as Router,Routes,Route } from 'react-router-dom'
 import SkincareTips from './pages/SkincareTips'
 import Homepage from './components/Homepage'
 import DermatologistProfile from './pages/DermatologistProfile'
+import Dermatologist from './components/Dermatologist'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
-import Dermatologist from './components/Dermatologist'
 
 function App() {
   return (
