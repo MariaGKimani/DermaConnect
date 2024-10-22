@@ -51,7 +51,7 @@ const dermatologists = [
       id: 7, 
       name: 'Dr. Laura Garcia', 
       title: 'Dermatologist', 
-      image: 'https://www.isdin.com/us/blog/wp-content/uploads/2020/10/Dermatologist-Recommended-Sunscreens-ISDIN-1170x600.png', 
+      image: 'https://family.drlaura.com/images/Site/Program/drlaura_new.jpg', 
       description: 'Dr. Laura specializes in acne treatment and scar revision. She is also an advocate for sun protection and skin cancer awareness.'
     },
     { 
@@ -93,60 +93,79 @@ const dermatologists = [
   
 
   const Dermatologist = () => {
-    return (
-        <>
-            <Box>
-                <Navbar />
-                {/* Heading */}
-                <Box mt="100px" textAlign="center">
-                    <Text fontSize="3xl" fontWeight="bold" color="#274760">Our Trusted Dermatologists</Text>
-                    <Text fontSize="lg" mt={2} color="gray.600">Browse through our certified dermatology professionals ready to assist with your skincare needs.</Text>
-                </Box>
+  return (
+    <>
+      <Box>
+        <Navbar />
+        {/* Heading */}
+        <Box mt="100px" textAlign="center">
+          <Text fontSize="3xl" fontWeight="bold" color="#274760">Our Trusted Dermatologists</Text>
+          <Text fontSize="lg" mt={2} color="gray.600">Browse through our certified dermatology professionals ready to assist with your skincare needs.</Text>
+        </Box>
 
-                {/* Dermatologist Information */}
-                <Box mt="50px" p={4}>
-                    <Flex justifyContent="space-around">
-                        <Grid templateColumns="repeat(3, 1fr)" gap={65} >
-                            {dermatologists.map(dermatologist => (
-                            <GridItem key={dermatologist.id}>
-                                <Box 
-                                    width="350px" 
-                                    height="500px" 
-                                    background="rgba(209, 238, 244, 0.5)" 
-                                    textAlign="center" 
-                                    p={4}
-                                    position="relative">
-                                  
-                                    <Box  display="flex" justifyContent="center">
-                                        <Image 
-                                            src={dermatologist.image} 
-                                            alt={dermatologist.name} 
-                                            boxSize="200px"                       
-                                        />
-                                    </Box>
-                                    
-                                    <Box backgroundColor="white" mt={4} p={4} borderRadius="md">
-                                        <Text fontWeight="bold" color="#274760" fontSize="xl">{dermatologist.name}</Text>
-                                        <Text color="gray.600" mt={2}>{dermatologist.title}</Text>
-                                        
-                                        <Text mt={4} color="#274760" fontSize="sm">{dermatologist.description}</Text>
-                                    </Box>
+        {/* Dermatologist Cards */}
+        <Box mt="50px" p={4}>
+          <Flex justifyContent="center">
+            <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} gap={8}>
+              {dermatologists.map(dermatologist => (
+                <GridItem key={dermatologist.id}>
+                  <Box 
+                    width="100%" 
+                    maxW="350px" 
+                    height="auto" 
+                    background="rgba(209, 238, 244, 0.5)" 
+                    borderRadius="lg" 
+                    boxShadow="md"
+                    transition="transform 0.3s"
+                    _hover={{ transform: "scale(1.05)" }}
+                    textAlign="center" 
+                    p={6}
+                    position="relative"
+                  >
+                    <Image 
+                      src={dermatologist.image} 
+                      alt={dermatologist.name} 
+                      borderRadius="full" 
+                      boxSize="200px" 
+                      objectFit="contain" 
+                      mx="auto" 
+                    />
 
-                                    <Box display="flex" justifyContent="space-between" mt={4}>
-                                        <Button backgroundColor="#0A345C" color="white" _hover={{ backgroundColor: "#082B4A" }}>View Profile</Button>
-                                        <Button backgroundColor="#0A345C" color="white" _hover={{ backgroundColor: "#082B4A" }}>Book Appointment</Button>
-                                    </Box>
+                    <Box backgroundColor="white" mt={4} p={4} borderRadius="md">
+                      <Text fontWeight="bold" color="#274760" fontSize="xl">{dermatologist.name}</Text>
+                      <Text color="gray.600" mt={2}>{dermatologist.title}</Text>
+                      <Text mt={4} color="#274760" fontSize="sm">{dermatologist.description}</Text>
+                    </Box>
 
-                                </Box>
-                            </GridItem>
-                        ))}
-                    </Grid>
-                    </Flex>
-                </Box>
-                <Footer />
-            </Box>
-        </>
-    );
+                    <Box mt={4}>
+                      <Button 
+                        width="100%" 
+                        backgroundColor="#0A345C" 
+                        color="white" 
+                        _hover={{ backgroundColor: "#082B4A" }} 
+                        mb={2}
+                      >
+                        View Profile
+                      </Button>
+                      <Button 
+                        width="100%" 
+                        backgroundColor="#0A345C" 
+                        color="white" 
+                        _hover={{ backgroundColor: "#082B4A" }}
+                      >
+                        Book Appointment
+                      </Button>
+                    </Box>
+                  </Box>
+                </GridItem>
+              ))}
+            </Grid>
+          </Flex>
+        </Box>
+        <Footer />
+      </Box>
+    </>
+  );
 };
 
 export default Dermatologist;
