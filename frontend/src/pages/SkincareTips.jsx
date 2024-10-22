@@ -1,5 +1,5 @@
 import React from "react";
-import { Box,Image,Text,Heading,SimpleGrid,Button,Link} from "@chakra-ui/react";
+import { Box,Image,Text,Heading,SimpleGrid,Grid,Button,Link} from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -60,21 +60,21 @@ const SkincareTips = () => {
         <>
         <Box>
             <Navbar />
-            <Box bgImage='https://images.ctfassets.net/7bobsix9kke6/fNXkOvVP3m1Y5PKmvnxt3/e7c9f70748d268a589188b32287667bf/pexels-th-fingerstudios-6096399.jpg?w=1600&h=650&fl=progressive&q=75&fm=jpg&fit=thumb' height='65vh' filter='contrast(55%)' bgSize='cover'>
+            <Box bgImage='https://images.ctfassets.net/7bobsix9kke6/fNXkOvVP3m1Y5PKmvnxt3/e7c9f70748d268a589188b32287667bf/pexels-th-fingerstudios-6096399.jpg?w=1600&h=650&fl=progressive&q=75&fm=jpg&fit=thumb' height='65vh' filter='contrast(55%)' bgSize='cover' mt='5.5rem'>
                 <Box color='white' textAlign='center' p='13rem'>
-                    <Heading size='4xl'>Unlock Expert Skin Care Insights</Heading>
-                    <Text fontSize='3rem'>Your Guide to Glowing,Healthy,Skin Starts Here</Text>
+                    <Heading size='3xl'>Unlock Expert Skin Care Insights</Heading>
+                    <Text fontSize='2rem'>Your Guide to Glowing,Healthy Skin Starts Here</Text>
                 </Box>
             </Box>
 
-            <Box bgColor='#D1EEF4' p='5rem'>
+            <Box bgColor='#D1EEF4' p='4rem'>
                 <Heading textAlign='center'>Types of Skin</Heading>
-                <SimpleGrid columns={2} gap='6rem' >
+                <SimpleGrid columns={2} gap='1.5rem' >
                 {skinTypes.map((type) => {
-                    return <Box key={type.url} mt='5rem' ml='16.5rem' mb='2rem'>
-                        <Image src={type.url} height='25vh' borderRadius='50px'/>
+                    return <Box key={type.url} mt='3rem' ml='20rem' mb='2rem'>
+                        <Image src={type.url} height='20vh' borderRadius='50px'/>
                         <Link href={type.tipsUrl}>
-                        <Button bgColor='#0A345C' colorScheme="#0A345C" color='#FFFFFF' mt='1rem' width='13vw'>Learn more</Button>
+                        <Button bgColor='#0A345C' colorScheme="#0A345C" color='#FFFFFF' mt='1rem' width='10.5vw'>Learn more</Button>
                         </Link>
                     </Box>
                 })}
@@ -83,17 +83,17 @@ const SkincareTips = () => {
 
             <Box p='3rem'>
                 <Heading textAlign='center'>Commmon Skin Concerns</Heading>
-                <SimpleGrid columns={3} >
+                <Grid templateColumns='repeat(3, 1fr)'>
                     {skinConcerns.map((concern) => {
                         return <Box mt='4rem' ml='8.5rem' mb='2rem'>
-                            <Image src={concern.imageUrl} height='300px' width='300px' borderRadius='10px'/>
-                            <Heading mt='1rem' size='lg'>{concern.title}</Heading>
+                            <Image src={concern.imageUrl} height='250px' width='250px' borderRadius='10px'/>
+                            <Heading mt='1rem' size='md'>{concern.title}</Heading>
                             <Link href={concern.tipsUrl}>
-                                <Button bgColor='#0A345C' colorScheme="#0A345C" color='#FFFFFF' mt='1rem' width='16vw'>Learn more</Button>
+                                <Button bgColor='#0A345C' colorScheme="#0A345C" color='#FFFFFF' mt='1rem' width='13.5vw'>Learn more</Button>
                             </Link>
                         </Box>
                 })}
-                </SimpleGrid>
+                </Grid>
             </Box>
 
             <Footer/>
