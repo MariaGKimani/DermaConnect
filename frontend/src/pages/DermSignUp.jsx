@@ -82,13 +82,10 @@ const DermatologistSignupForm = () => {
           </HStack>
         </VStack>
 
-        {/* Right Side: File Uploads with Heading */}
         <VStack w="35%" spacing={4} align="flex-start">
           <Box fontSize="lg" fontWeight="bold" mb={4}>
             Attach documents
           </Box>
-
-          {/* Flex container for file uploads */}
           <HStack w="100%" spacing={10}>
             <VStack spacing={14} w="50%">
               <FormControl>
@@ -161,7 +158,6 @@ const DermatologistSignupForm = () => {
         </VStack>
       </Flex>
 
-      {/* Submit Button */}
       <Box mt={8}>
             <Button bg={'#0A345C'} color="white" size='lg' _hover={{bg: 'transparent',color: '#0A345C', border: '2px solid #0A345C',}}>
             Signup
