@@ -7,6 +7,8 @@ import DermatologistProfile from './pages/DermatologistProfile'
 import Dermatologist from './components/Dermatologist'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
+import DermatologistSignupForm  from './pages/DermSignUp.jsx'
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
             <Route path='/signUp' element={<SignUp />} />
             <Route path='/signIn' element={<SignIn />} />
             <Route path='/dermatologist' element={<Dermatologist />}/>
+            <Route path='/dermatologistSignup' element={<DermatologistSignupForm />} />
           </Routes>
         </Router>  
       </ChakraProvider>
