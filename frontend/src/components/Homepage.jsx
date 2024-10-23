@@ -17,7 +17,6 @@ const Homepage = () => {
         <>
             <Box>
                 <Navbar />
-                {/* First box */}
                 <Box
                     height="80vh"
                     display="flex"
