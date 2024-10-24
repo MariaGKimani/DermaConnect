@@ -1,6 +1,7 @@
 import React from "react";
 import { 
-  Box, Button, FormControl, Image, FormLabel, Input, Select, Textarea, Flex, RadioGroup, Radio
+  Box, Button, FormControl, Image, FormLabel, Input, Select, Textarea, Flex, RadioGroup, Radio,
+  Heading
 } from "@chakra-ui/react";
 import logo from "../assets/Pink_Minimal_Skincare___Hair_Free_Logo__1_-removebg-preview.png";
 
@@ -8,11 +9,11 @@ const DermatologistSignupForm = () => {
   return (
     <Box p={'8'} borderWidth="1px" borderRadius="lg">
       <Box textAlign="center" mb={0}>
-        <Image src={logo} alt='dermaconnect-logo' height='200px' ml='-5rem' mb={0}/>
+        <Image src={logo} alt='dermaconnect-logo' height='200px' ml={'-3.5rem'}/>
       </Box>
-      <Box as="h1" fontSize="2xl" fontWeight="bold" textAlign="center" mb={'0'} >
+      <Heading as="h1" fontSize="3xl" fontWeight="bold" mt={'-2rem'} mb={'1rem'} >
         CREATE AN ACCOUNT
-      </Box>
+      </Heading>
 
       <Flex justify="space-between" align="flex-start" w="100%">
         <Flex direction="column" w="60%" gap={4}>
@@ -82,9 +83,9 @@ const DermatologistSignupForm = () => {
         </Flex>
 
         <Flex direction="column" w="35%" gap={4} align="flex-start">
-          <Box fontSize="lg" fontWeight="bold" mb={4}>
+          <Heading as="h3" size="lg" fontWeight="bold" mb={1}>
             Attach documents
-          </Box>
+          </Heading>
           <Flex w="100%" gap={10}>
             <Flex direction="column" gap={14} w="50%">
               <FormControl>
@@ -122,7 +123,11 @@ const DermatologistSignupForm = () => {
         </Flex>
 
         <Flex direction="column" w="35%" gap={4} align="flex-start">
+          <Heading as="h3" size="lg" fontWeight="bold" mb={3}>
+           Service Charges
+          </Heading>
           <Flex w="100%" justify="space-between" gap={10}>
+          
             <Flex direction="column" gap={4} w="50%">
               <FormControl>
                 <FormLabel fontWeight="bold">Cost per Session</FormLabel>
