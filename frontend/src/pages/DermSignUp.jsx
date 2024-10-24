@@ -83,7 +83,7 @@ const DermatologistSignupForm = () => {
         </Flex>
 
         <Flex direction="column" w="35%" gap={4} align="flex-start">
-          <Heading as="h3" size="lg" fontWeight="bold" mb={1}>
+          <Heading as="h3" size="lg" fontWeight="bold" >
             Attach documents
           </Heading>
           <Flex w="100%" gap={10}>
@@ -114,7 +114,7 @@ const DermatologistSignupForm = () => {
         </Flex>
       </Flex>
 
-      <Flex justify="space-between" align="flex-start" w="100%" gap={10}>
+      <Flex justify="space-between" align="flex-start" w="100%" gap={10} >
         <Flex direction="column" w="60%">
           <FormControl>
             <FormLabel fontWeight="bold" mt={5} >Describe Your Expertise and Services</FormLabel>
@@ -122,13 +122,22 @@ const DermatologistSignupForm = () => {
           </FormControl>
         </Flex>
 
-        <Flex direction="column" w="35%" gap={4} align="flex-start">
+        <Flex direction="column" w="35%" gap={4} align="flex-start" mt={-4}>
           <Heading as="h3" size="lg" fontWeight="bold" mb={3}>
            Service Charges
           </Heading>
           <Flex w="100%" justify="space-between" gap={10}>
           
             <Flex direction="column" gap={4} w="50%">
+              <FormControl>
+                <FormLabel fontWeight="bold">Consultation fees</FormLabel>
+                <Select placeholder="Select cost" borderColor="#0A345C" focusBorderColor="#0A345C">
+                  <option value="500">1000</option>
+                  <option value="1000">2000</option>
+                  <option value="1000">3000</option>
+                 
+                </Select>
+              </FormControl>
               <FormControl>
                 <FormLabel fontWeight="bold">Cost per Session</FormLabel>
                 <Select placeholder="Select cost" borderColor="#0A345C" focusBorderColor="#0A345C">
