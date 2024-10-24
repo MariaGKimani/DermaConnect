@@ -2,7 +2,7 @@ import React from "react";
 import { 
   Box, Button, FormControl, FormLabel, Heading, Image, Input, Text, Link as ChakraLink, Checkbox, Flex 
 } from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link} from "react-router-dom";
 import logo from "../assets/Pink_Minimal_Skincare___Hair_Free_Logo__1_-removebg-preview.png";
 
 const DermLogin = () => {
@@ -10,7 +10,9 @@ const DermLogin = () => {
     <>
       <Box display={"flex"}>
         <Box width='50vw' height='100vh' ml='20rem'>
+          <Link to={'/'}>
           <Image src={logo} alt='dermaconnect-logo' height='250px' ml='-5.9rem' mt='1rem' />
+          </Link>
           <Heading ml='-0.2rem' mt='-5rem'>SIGN IN</Heading>
           
           <form>
@@ -34,9 +36,9 @@ const DermLogin = () => {
           <Flex justifyContent="center" mt="1rem">
             <Text fontSize="sm" color={'#181818'} ml="-17rem">
               Don’t have an account? 
-              <ChakraLink as={ReactRouterLink} to='/dermatologistSignup' fontWeight="bold" ml="0.5rem">
+              <Link to='/dermatologistSignup' fontWeight="bold" ml="0.5rem">
                 Sign Up
-              </ChakraLink>
+              </Link>
             </Text>
           </Flex>
         </Box>

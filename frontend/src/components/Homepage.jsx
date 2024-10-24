@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { Link } from 'react-router-dom';
 import { Box, Heading, Text, Button, Flex, Stack, Image, Divider, Spacer, Avatar } from '@chakra-ui/react';
 import skinImage from '../assets/HOMEPAGE1.jpg'
 import skinButton from '../assets/HOMEPAGE 2.webp'
@@ -50,9 +51,12 @@ const Homepage = () => {
                              _hover={{ color: "teal.500",  transform: "scale(1.05)", transition: "all 0.3s ease", }}> 
                                 Let us help you glow
                             </Text>
+                            <Link to='/dermatologist'>
                             <Button mt="2rem" colorScheme="teal" size="lg" alignItems='center' bg="#0A345C"_hover={{bg: 'transparent',color: '#0A345C', border: '2px solid #0A345C',}}>
                                 Book an Appointment
                             </Button>
+                            </Link>
+                            
                         </Box>
                     </Flex>
                 </Box>
@@ -102,12 +106,16 @@ const Homepage = () => {
                                 "No matter your skin condition,<br /> we're here to guide you with <br />expert tips for healthier, glowing skin.<br /> Start your journey to clear skin today!"
                             </Text>
                             <Flex mt="2rem">
-                                <Button colorScheme="teal" size="md" mr="1rem" bg="#0A345C" _hover={{bg: 'transparent',color: '#0A345C', border: '2px solid #0A345C',}}>
+                                <Link to={'/skincareTips'}>
+                                    <Button colorScheme="teal" size="md" mr="1rem" bg="#0A345C" _hover={{bg: 'transparent',color: '#0A345C', border: '2px solid #0A345C',}}>
                                     Explore skincare tips
+                                    </Button>       
+                                </Link>
+                                <Link to={'/dermatologist'}>
+                                <Button colorScheme="teal" size="md" bg="#0A345C" _hover={{bg: 'transparent',color: '#0A345C', border: '2px solid #0A345C',}}>
+                                        Find a dermatologist
                                 </Button>
-                                <Button colorScheme="teal" size="md" bg="#0A345C"  _hover={{bg: 'transparent',color: '#0A345C', border: '2px solid #0A345C',}}>
-                                    Find a dermatologist
-                                </Button>
+                                </Link>
                             </Flex>
                         </Box>
                     </Flex>
