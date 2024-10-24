@@ -105,7 +105,7 @@ const Homepage = () => {
                                 <Button colorScheme="teal" size="md" mr="1rem" bg="#0A345C" _hover={{bg: 'transparent',color: '#0A345C', border: '2px solid #0A345C',}}>
                                     Explore skincare tips
                                 </Button>
-                                <Button colorScheme="teal" size="md" bg="#0A345C"_hover={{bg: 'transparent',color: '#0A345C', border: '2px solid #0A345C',}}>
+                                <Button colorScheme="teal" size="md" bg="#0A345C"  _hover={{bg: 'transparent',color: '#0A345C', border: '2px solid #0A345C',}}>
                                     Find a dermatologist
                                 </Button>
                             </Flex>

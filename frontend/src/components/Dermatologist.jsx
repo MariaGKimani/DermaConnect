@@ -95,7 +95,7 @@ const dermatologists = [
 
   const DermatologistCard = ({ name, title, description, image }) => (
     <Card border='none' maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow='lg'>
-      
+ 
       <CardBody
         bg="rgba(209, 238, 244, 0.5)" 
         borderRadius="lg"
@@ -126,8 +126,7 @@ const dermatologists = [
       </CardBody>
       
       <CardFooter 
-        bg="rgba(209, 238, 244, 0.5)" 
-        borderRadius="lg"
+        bg="rgba(209, 238, 244, 0.5)"
         display="flex"
         justifyContent="center">
          
