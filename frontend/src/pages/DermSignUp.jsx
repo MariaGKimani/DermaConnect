@@ -4,12 +4,16 @@ import {
   Heading
 } from "@chakra-ui/react";
 import logo from "../assets/Pink_Minimal_Skincare___Hair_Free_Logo__1_-removebg-preview.png";
+import { Link } from 'react-router-dom';
+
 
 const DermatologistSignupForm = () => {
   return (
     <Box p={'8'} borderWidth="1px" borderRadius="lg">
       <Box textAlign="center" mb={0}>
+        <Link to={'/'}>
         <Image src={logo} alt='dermaconnect-logo' height='200px' ml={'-3.5rem'}/>
+        </Link>
       </Box>
       <Heading as="h1" fontSize="3xl" fontWeight="bold" mt={'-2rem'} mb={'1rem'} >
         CREATE AN ACCOUNT
